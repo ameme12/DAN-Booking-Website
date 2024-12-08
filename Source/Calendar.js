@@ -101,7 +101,7 @@ class Calendar
 
         this.container.appendChild(daysContainer);
     }
-
+    /*
     manageMode(day, date)
     {
         let isAvailable = this.options.availableDates?.includes(date);
@@ -116,9 +116,11 @@ class Calendar
         }
     }
 
+     */
+
     dayListeners(dayElement, date) 
     {
-        dayElement.addEventListener('mousedown', (e) =>
+        dayElement.addEventListener('mousedown', () =>
             {
             if (dayElement.classList.contains('day-selected'))
             {
@@ -137,7 +139,7 @@ class Calendar
                 this.options.onDaySelect(Array.from(this.selectedDays));
         });
 
-        dayElement.addEventListener('mousemove', (e) =>
+        dayElement.addEventListener('mousemove', () =>
         {
             if (this.isSelecting && !dayElement.classList.contains('day-selected'))
             {
@@ -229,7 +231,7 @@ class Calendar
         }
     }
 
-    showSidebar(day, date) 
+    showSidebar()
     {
         document.getElementById('calendar-container').classList.add('calendar-trim');
         let sidebar = document.getElementById('calendar-sidebar');
