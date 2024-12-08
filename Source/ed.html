@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
+    <title>Calendar</title>
+
+    <style>
+
+        body
+        {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .sidebar{
+            top: 0;
+            left: 0;
+            width: 15%;
+            height:100vh;
+            box-sizing: border-box;
+            position: fixed;
+            border-right: 5px solid #ee3c30;
+            border-top: 5px solid #ee3c30;
+            border-bottom: 5px solid #ee3c30;
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 100px;
+            display: flex;
+            
+            
+        }
+
+        .sidebar-content{
+            left: 0;
+        }
+
+        .dashboard{
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            box-sizing: border-box;
+            height: 17vh;   
+            display:flex; 
+            gap: 20px            
+        }
+
+        .dashboard-box{
+            flex:1;
+            width:50%;
+        }
+
+
+        .mcgill-image{
+            width: 70px;
+            height: auto;
+        }
+
+        .dashboard-text{
+            width:50%;
+            flex:auto;
+            font-size: 18px;
+            font-family: "Young Serif";
+            color: #ee3c30;
+            flex-direction: column;
+            padding-top: 20px;
+        
+        }
+
+        .dashboard-text h3{
+           
+            margin: 0;
+            line-height: 1;
+        }
+
+        .dashboard-divide{
+            
+            flex:auto;
+            float:left;
+            width:90%;
+            height: 3px;
+            background-color: #d9d9d9;
+            
+        }
+
+        .menu{
+            display: flex;
+            flex-direction: column;
+            padding: 0px 35px;
+            gap: 5px;
+            padding-top: 30px;
+            padding-bottom: 10px;
+
+        }
+
+        .menu a{
+
+            text-decoration: none;
+            color: black;                
+            font-size: 17px;
+            
+        }
+
+        .sidebar-bottom{
+            margin: 0;
+            padding-top: 200px;
+        }
+
+        .logout-button{
+           
+            background-color: black;
+            color: white;
+            border-radius: 18px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 100px;
+            border: none;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-left: 8px;
+            vertical-align: top;
+            transition: box-shadow 0.15s;
+        }
+
+        .logout-button:hover{
+            box-shadow:5px 5px 10px rgba(0,0,0,0.15);
+        }
+        
+
+
+        @media screen and (max-width: 800px) {
+            .sidebar{
+                width: 25%;
+            }
+
+            .mcgill-image{
+                width: 40px;
+                height: auto;
+            }
+
+            .menu{
+                gap : 0px;
+            }
+          
+        }
+
+     
+
+    </style>
+</head>
+<body>
+    <div class = "sidebar">
+        <div class="sidebar-content">
+
+            <div class="dashboard">
+
+                <div class ="dashboard-box">
+
+                <img class = "mcgill-image" src="mcgill_crest.png" >
+                    
+                </div>
+
+                <div class="dashboard-text">
+
+                <h3 >Mcgill</h3>
+                <h3 >Bookings</h3>
+
+                </div>
+            
+            
+            </div>
+
+            <div class="dashboard-divide">
+
+            </div>
+
+            <div class="menu">
+
+            <a href="#" class="sidebar-button">Manage bookings</a><br><br>
+            <a href="#" class="sidebar-button">Create a booking</a><br><br>
+            <a href="#" class="sidebar-button">Request a booking</a><br><br>
+            <a href="#" class="sidebar-button">Availabity polls</a><br><br>
+        
+
+            </div>
+
+            <div class="dashboard-divide">
+
+            </div>
+
+            <div class= "sidebar-bottom">
+
+            <button href="#" class="logout-button">Logout</button>
+            
+            </div>
+        </div>
+    </div>
+
+    <div id="calendar-wrapper" class ="calendar-wrapper">
+        <div id="calendar-container" class="calendar-container">
+        </div>
+        <div id="calendar-sidebar" class="calendar-sidebar">
+        </div>
+    </div>
+
+
+    <script src = "Calendar.js"></script>
+    <script>
+        let calendar = new Calendar('calendar-container',
+        {
+            mode: 'availability',
+            availableDates: [3, 5, 7, 10, 12],
+            onDaySelect: (selectedDays) =>
+            {
+                console.log('Selected Days:', selectedDays);
+            }
+        });
+    </script>
+</body>
+</html>
