@@ -204,6 +204,7 @@
     </div>
 
     <div id="calendar-wrapper" class ="calendar-wrapper">
+        <div id = "calendar-info" class = "calendar-info"></div>
         <div id="calendar-container" class="calendar-container">
         </div>
         <div id="calendar-sidebar" class="calendar-sidebar">
@@ -215,7 +216,8 @@
     <script>
         let calendar = new Calendar('calendar-container',
         {
-            mode: 'availability',
+
+            mode: 'selection',
             availableDates: [3, 5, 7, 10, 12],
             onDaySelect: (selectedDays) =>
             {

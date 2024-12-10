@@ -17,7 +17,7 @@ body
     border-radius: 8px;
 
     width: 500px;
-    height: 520px; /* 501*/
+    max-height: 520px;
 }
 
 .calendar-trim
@@ -129,8 +129,7 @@ body
 .calendar-sidebar ul li 
 {
     padding: 5px;
-    margin: 5px 0;
-    margin-bottom: 15px;
+    margin: 5px 0 15px;
     border: 2px solid #ff6659;
     border-radius: 8px;
     text-align: center;

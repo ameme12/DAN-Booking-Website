@@ -19,6 +19,17 @@ class Calendar
 
 
     }
+    /*
+    If recurring, I want to link each Day of the
+     */
+    /*
+    If you have recurring, you select a start and end date, then you get a list of all the days, then you choose which days
+    you want, and start and end times for each day
+
+    Mon 13 -> 14 two 30-min slots, or one hour
+    Tue 16 -> 19 3 hours, or 6 30-mins?
+
+     */
     initialize()
     {
         document.addEventListener('mouseup', () =>
