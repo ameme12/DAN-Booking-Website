@@ -27,7 +27,7 @@ CREATE TABLE Poll
     pollId INT PRIMARY KEY,
     description VARCHAR(max),
     title VARCHAR(50),
-    statusq1q BIT,
+    status BIT,
     creator INT NOT NULL,
     FOREIGN KEY (creator) REFERENCES Members(userId)
 );
@@ -76,7 +76,7 @@ CREATE TABLE Dates
 
 );
 
-CREATE TABLE reserve
+CREATE TABLE Reserve
 (
     bookingId INT,
     userId INT,
@@ -87,12 +87,25 @@ CREATE TABLE reserve
     FOREIGN KEY (userId) REFERENCES User(userId)
 );
 
-CREATE TABLE Week
+CREATE TABLE Votes
 (
     pollId INT,
-     
-    PRIMARY KEY (pollId)
+    userId INT,
+    day VARCHAR(20),
+    slot_number INT,
+    PRIMARY KEY (pollId, userId),
+    FOREIGN KEY (pollId) REFERENCES Poll(pollId),
+    FOREIGN KEY (userId) REFERENCES Members(userId)
 );
+
+CREATE TABLE BookingAttachment
+(
+    bookingId INT,
+    attachmentId INT NOT NULL,
+    PRIMARY KEY (bookingId)
+);
+
+
 
 
 
