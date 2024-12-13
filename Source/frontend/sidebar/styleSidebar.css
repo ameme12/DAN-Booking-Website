@@ -1,0 +1,201 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9;
+
+}
+
+/* Side Bar */
+
+.sidebar{
+    top: 0;
+    left: 0;
+    width: 15%;
+    height:100vh;
+    position: fixed;
+    border-right: 5px solid #ee3c30;
+    border-top: 5px solid #ee3c30;
+    border-bottom: 5px solid #ee3c30;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+
+}
+
+.sidebar.close{
+    width: 5%;
+}
+
+.sidebar .text{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.sidebar.close .text{
+    opacity: 0;
+}
+
+.sidebar .image{
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar header{
+    position: relative;
+
+}
+
+.sidebar .dashboard-box img{
+    width: 60px;
+    padding: 10px;
+}
+
+.sidebar.close .dashboard-box img{
+    width: 20px;
+    padding: 10px;
+}
+
+.sidebar header .dashboard-box{
+    display: flex;
+    align-items: center;
+}
+
+header .dashboard-box .dashboard-text{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.dashboard-text .name{
+
+    font-family: "Young Serif";
+    color: #ee3c30;
+    font-weight: 600;
+
+}
+
+.dashboard-text .function{
+
+    font-family: "Young Serif";
+    font-weight: 600;
+    color: #ee3c30;
+    margin-top:-2px;
+
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    height: 25px;
+    width:25px;
+    background-color: #ee3c30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+
+}
+
+
+.dashboard-divide{
+
+    flex:auto;
+    float:left;
+    width:90%;
+    height: 3px;
+    background-color: #d9d9d9;
+
+}
+
+.sidebar li{
+    list-style: none;
+    margin-top: 10px;
+    padding-top: 30px;
+    padding-left: 10px;
+    display: flex;
+
+}
+
+.sidebar li a{
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.sidebar li .icon{
+    min-width: 40px;
+    font-size: 20px;
+}
+
+.sidebar li .icon,
+.sidebar li .text{
+    color: black;
+}
+
+.sidebar li .text{
+    font-size: 18px;
+}
+
+
+/*
+.menu{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 15px;
+    gap: 5px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+
+}
+
+*/
+
+
+.sidebar-bottom{
+    margin: auto;
+    padding-top: 200px;
+
+
+}
+
+.logout-button{
+
+    background-color: black;
+    color: white;
+    border-radius: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 8px;
+    vertical-align: top;
+    transition: box-shadow 0.15s;
+}
+
+.logout-button:hover{
+    box-shadow:5px 5px 10px rgba(0,0,0,0.15);
+}
+
+
+
+@media screen and (max-width: 1500px) {
+    .sidebar{
+        width: 25%;
+        height: 100vh;
+    }
+    .dashboard-divide{
+        width:100%
+    }
+
+}
+
