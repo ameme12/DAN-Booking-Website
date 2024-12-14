@@ -9,6 +9,7 @@ CREATE TABLE Members
 (
     email VARCHAR(100) PRIMARY KEY,
     password VARCHAR(50) NOT NULL,
+    userId INT NOT NULL UNIQUE,
     FOREIGN KEY (userId) REFERENCES User(userId)
 );
 
@@ -25,21 +26,28 @@ CREATE TABLE Booking
 CREATE TABLE Poll
 (
     pollId INT PRIMARY KEY,
-    description VARCHAR(max),
+    description VARCHAR(500),
     title VARCHAR(50),
     status BIT,
     creator INT NOT NULL,
     FOREIGN KEY (creator) REFERENCES Members(userId)
 );
 
+CREATE TABLE NotificationTemplate
+(
+    templateId INT PRIMARY KEY,
+    message VARCHAR(500)
+);
+
 CREATE TABLE Notification
 (
     notificationId INT PRIMARY KEY,
     date DATE,
-    message VARCHAR(MAX),
     status_read BIT,
-    notified_user INT NOT NULL,
-    FOREIGN KEY (notified_user) REFERENCES Members(userId)
+    userId INT NOT NULL,
+    templateId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES Members(userId) ON DELETE CASCADE,
+    FOREIGN KEY (templateId) REFERENCES NotificationTemplate(templateId)
 );
 
 CREATE TABLE Attachments
@@ -49,65 +57,64 @@ CREATE TABLE Attachments
     url VARCHAR(255),
 );
 
-CREATE TABLE Days
-(
-    week_day VARCHAR(50) PRIMARY KEY,
-);
-
 CREATE TABLE AvailableSlots
 (
-    week_day VARCHAR(20),
-    slot_number INT,
-    max_participants INT,
-    full BIT,
-    PRIMARY KEY (week_day, slot_number),
-    FOREIGN KEY (week_day) REFERENCES Days(week_day)
+    slotId INT AUTO_INCREMENT PRIMARY KEY,
+    bookingId INT NOT NULL,
+    week_day VARCHAR(20) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    max_participants INT NOT NULL,
+    is_full BIT,
+    FOREIGN KEY (bookingID) REFERENCES Booking(bookingId),
 );
 
 CREATE TABLE Dates
 (
-    bookingId INT,
-    week_day VARCHAR(20),
+    slotId INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE,
-    PRIMARY KEY(bookingId, week_day),
-    FOREIGN KEY (bookingId) REFERENCES Booking(bookingId),
-    FOREIGN KEY (week_day) REFERENCES Days(week_day)
+    PRIMARY KEY(slotId),
+    FOREIGN KEY (slotId) REFERENCES AvailableSlots(slotId)
 
 );
 
 CREATE TABLE Reserve
 (
-    bookingId INT,
-    userId INT,
-    day VARCHAR(50),
-    slot_number INT,
-    PRIMARY KEY (bookingId, userId),
-    FOREIGN KEY (bookingId) REFERENCES Booking(bookingId),
-    FOREIGN KEY (userId) REFERENCES User(userId)
+    reserveId INT AUTO_INCREMENT PRIMARY KEY,
+    bookingId INT NOT NULL,
+    userId INT NOT NULL,
+    slotId INT NOT NULL,
+    FOREIGN KEY (bookingId) REFERENCES Booking(bookingId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES User(userId),
+    FOREIGN KEY (slotId) REFERENCES AvailableSlots(slotId) ON DELETE CASCADE
 );
 
 CREATE TABLE Votes
 (
-    pollId INT,
-    userId INT,
-    day VARCHAR(20),
-    slot_number INT,
-    PRIMARY KEY (pollId, userId),
-    FOREIGN KEY (pollId) REFERENCES Poll(pollId),
-    FOREIGN KEY (userId) REFERENCES Members(userId)
+    voteId INT AUTO_INCREMENT PRIMARY KEY,
+    pollId INT NOT NULL,
+    userId INT NOT NULL,
+    day VARCHAR(20) NOT NULL ,
+    slot_number INT NOT NULL,
+    FOREIGN KEY (pollId) REFERENCES Poll(pollId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES Members(userId) ON DELETE CASCADE
 );
 
 CREATE TABLE BookingAttachment
 (
     bookingId INT,
     attachmentId INT NOT NULL,
-    PRIMARY KEY (bookingId)
+    PRIMARY KEY (bookingId, attachmentId),
+    FOREIGN KEY (bookingId) REFERENCES Booking(bookingId) ON DELETE CASCADE,
+    FOREIGN KEY (attachmentId) REFERENCES Attachments(attachmentId) ON DELETE CASCADE
+
 );
 
-
-
-
+CREATE INDEX idx_members_email ON Members(email);
+CREATE INDEX idx_booking_creator ON Booking(creator);
+CREATE INDEX idx_reserve_userId ON Reserve(userId);
+CREATE INDEX idx_votes_pollId ON Votes(pollId);
 
 
 
