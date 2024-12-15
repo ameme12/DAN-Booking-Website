@@ -3,7 +3,7 @@ DROP TABLE BookingAttachment;
 DROP TABLE Votes;
 DROP TABLE Reserve;
 DROP TABLE Dates;
-DROP TABLE AvailableSLots;
+DROP TABLE AvailableSlots;
 DROP TABLE Attachments;
 DROP TABLE Notification;
 DROP TABLE NotificationTemplate;
