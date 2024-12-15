@@ -78,73 +78,73 @@ VALUES
 
 INSERT INTO Booking (bookingId, is_recurring, location, awaiting_response, creator)
 VALUES
-    (1, 1, 'Conference Room A', 0, 1),
-    (2, 1, 'Meeting Room B', 0, 2),
-    (3, 1, 'Lecture Hall C', 0, 3),
-    (4, 1, 'Auditorium D', 0, 4),
-    (5, 1, 'Room E', 0, 5),
-    (6, 0, 'Library F', 1, 6),
-    (7, 0, 'Room G', 1, 7),
-    (8, 0, 'Room H', 1, 8),
-    (9, 0, 'Room I', 1, 9),
-    (10, 0, 'Room J', 1, 10),
-    (11, 0, 'Room K', 1, 11),
-    (12, 0, 'Room L', 1, 12),
-    (13, 0, 'Room M', 1, 13),
-    (14, 0, 'Room N', 1, 14),
-    (15, 0, 'Room O', 1, 15);
+    (1, true, 'Conference Room A', false, 1),
+    (2, true, 'Meeting Room B', false, 2),
+    (3, true, 'Lecture Hall C', false, 3),
+    (4, true, 'Auditorium D', false, 4),
+    (5, true, 'Room E', false, 5),
+    (6, false, 'Library F', true, 6),
+    (7, false, 'Room G', true, 7),
+    (8, false, 'Room H', true, 8),
+    (9, false, 'Room I', true, 9),
+    (10, false, 'Room J', true, 10),
+    (11, false, 'Room K', true, 11),
+    (12, false, 'Room L', true, 12),
+    (13, false, 'Room M', true, 13),
+    (14, false, 'Room N', true, 14),
+    (15, false, 'Room O', true, 15);
 
 
 INSERT INTO AvailableSlots (bookingId, week_day, start_time, end_time, max_participants, is_full)
 VALUES
 -- Booking 1 (Recurring)
-(1, 'Monday', '09:00:00', '10:00:00', 10, 0),
-(1, 'Wednesday', '10:00:00', '11:00:00', 15, 0),
+(1, 'Monday', '09:00:00', '10:00:00', 10, false),
+(1, 'Wednesday', '10:00:00', '11:00:00', 15, false),
 
 -- Booking 2 (Recurring)
-(2, 'Tuesday', '14:00:00', '15:30:00', 20, 0),
-(2, 'Thursday', '16:00:00', '17:30:00', 10, 0),
+(2, 'Tuesday', '14:00:00', '15:30:00', 20, false),
+(2, 'Thursday', '16:00:00', '17:30:00', 10, false),
 
 -- Booking 3 (Recurring)
-(3, 'Friday', '12:00:00', '13:00:00', 25, 0),
-(3, 'Monday', '13:30:00', '14:30:00', 20, 0),
+(3, 'Friday', '12:00:00', '13:00:00', 25, false),
+(3, 'Monday', '13:30:00', '14:30:00', 20, false),
 
 -- Booking 4 (Recurring)
-(4, 'Thursday', '15:00:00', '16:30:00', 15, 0),
+(4, 'Thursday', '15:00:00', '16:30:00', 15, false),
 
 -- Booking 5 (Recurring)
-(5, 'Monday', '11:00:00', '12:00:00', 12, 0),
-(5, 'Wednesday', '13:00:00', '14:00:00', 8, 0),
+(5, 'Monday', '11:00:00', '12:00:00', 12, false),
+(5, 'Wednesday', '13:00:00', '14:00:00', 8, false),
 
 -- Booking 6 (One-Time)
-(6, 'Tuesday', '10:00:00', '11:00:00', 10, 0),
+(6, 'Tuesday', '10:00:00', '11:00:00', 10, false),
 
 -- Booking 7 (One-Time)
-(7, 'Thursday', '15:30:00', '16:30:00', 20, 0),
+(7, 'Thursday', '15:30:00', '16:30:00', 20, false),
 
 -- Booking 8 (One-Time)
-(8, 'Friday', '09:00:00', '10:30:00', 15, 0),
+(8, 'Friday', '09:00:00', '10:30:00', 15, false),
 
 -- Booking 9 (One-Time)
-(9, 'Monday', '14:00:00', '15:30:00', 5, 0),
+(9, 'Monday', '14:00:00', '15:30:00', 5, false),
 
 -- Booking 10 (One-Time)
-(10, 'Wednesday', '10:00:00', '11:30:00', 18, 0),
+(10, 'Wednesday', '10:00:00', '11:30:00', 18, false),
 
 -- Booking 11 (One-Time)
-(11, 'Friday', '13:00:00', '14:30:00', 25, 0),
+(11, 'Friday', '13:00:00', '14:30:00', 25, false),
 
 -- Booking 12 (One-Time)
-(12, 'Tuesday', '15:00:00', '16:00:00', 20, 0),
+(12, 'Tuesday', '15:00:00', '16:00:00', 20, false),
 
 -- Booking 13 (One-Time)
-(13, 'Monday', '16:00:00', '17:00:00', 30, 0),
+(13, 'Monday', '16:00:00', '17:00:00', 30, false),
 
 -- Booking 14 (One-Time)
-(14, 'Thursday', '08:00:00', '09:00:00', 10, 0),
+(14, 'Thursday', '08:00:00', '09:00:00', 10, false),
 
 -- Booking 15 (One-Time)
-(15, 'Friday', '17:00:00', '18:00:00', 5, 0);
+(15, 'Friday', '17:00:00', '18:00:00', 5, false);
 
 
 INSERT INTO Dates (slotId, start_date, end_date)
@@ -217,11 +217,11 @@ VALUES
 
 INSERT INTO Poll (pollId, description, title, status, creator)
 VALUES
-    (1, 'Vote for meeting time.', 'Meeting Time', 1, 1),
-    (2, 'Vote for location.', 'Location', 1, 2),
-    (3, 'Vote for project lead.', 'Project Lead', 1, 3),
-    (4, 'Vote for event date.', 'Event Date', 1, 4),
-    (5, 'Vote for retreat theme.', 'Retreat Theme', 1, 5);
+    (1, 'Vote for meeting time.', 'Meeting Time', true, 1),
+    (2, 'Vote for location.', 'Location', true, 2),
+    (3, 'Vote for project lead.', 'Project Lead', true, 3),
+    (4, 'Vote for event date.', 'Event Date', true, 4),
+    (5, 'Vote for retreat theme.', 'Retreat Theme', true, 5);
 
 INSERT INTO Votes (pollId, userId, day, slot_number)
 VALUES

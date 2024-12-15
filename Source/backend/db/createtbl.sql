@@ -1,8 +1,9 @@
+
 CREATE TABLE User
 (
     userId INT PRIMARY KEY,
     firstName VARCHAR(50) NOT NULL,
-    lastName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Members
@@ -16,9 +17,9 @@ CREATE TABLE Members
 CREATE TABLE Booking
 (
     bookingId INT PRIMARY KEY,
-    is_recurring BIT NOT NULL,
+    is_recurring BOOLEAN DEFAULT false,
     location VARCHAR(100),
-    awaiting_response BIT,
+    awaiting_response BOOLEAN,
     creator INT NOT NULL,
     FOREIGN KEY (creator) REFERENCES Members(userId)
 );
@@ -28,7 +29,7 @@ CREATE TABLE Poll
     pollId INT PRIMARY KEY,
     description VARCHAR(500),
     title VARCHAR(50),
-    status BIT,
+    status BOOLEAN DEFAULT TRUE,
     creator INT NOT NULL,
     FOREIGN KEY (creator) REFERENCES Members(userId)
 );
@@ -43,7 +44,7 @@ CREATE TABLE Notification
 (
     notificationId INT PRIMARY KEY,
     date DATE,
-    status_read BIT,
+    status_read BOOLEAN DEFAULT false,
     userId INT NOT NULL,
     templateId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES Members(userId) ON DELETE CASCADE,
@@ -54,7 +55,7 @@ CREATE TABLE Attachments
 (
     attachmentId INT PRIMARY KEY,
     name VARCHAR(100),
-    url VARCHAR(255),
+    url VARCHAR(255)
 );
 
 CREATE TABLE AvailableSlots
@@ -65,8 +66,8 @@ CREATE TABLE AvailableSlots
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     max_participants INT NOT NULL,
-    is_full BIT,
-    FOREIGN KEY (bookingID) REFERENCES Booking(bookingId),
+    is_full BOOLEAN default false,
+    FOREIGN KEY (bookingID) REFERENCES Booking(bookingId)
 );
 
 CREATE TABLE Dates
