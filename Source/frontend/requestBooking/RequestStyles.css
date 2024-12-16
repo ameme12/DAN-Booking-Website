@@ -1,0 +1,99 @@
+/* Body of the page css here*/
+.page-content
+{
+    top:0;
+    right:0;
+    float: left;
+    margin-left:15%;
+    width:85%;
+    height: 100vh;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    overflow: auto;
+
+
+}
+
+.request-box{
+    padding-left:100px;
+    background-color: #fff;
+    border: 2px solid #ee3c30;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80vh;
+}
+
+.staff-selector {
+    width: 75%;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    border: 2px solid #d9d9d9;
+    border-radius: 5px;
+    background-color: #fff;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.staff-selector:focus {
+    outline: none;
+    border-color: #ee3c30;
+    box-shadow: 0 0 5px rgba(238, 60, 48, 0.5);
+}
+
+.request-box-bottom{
+    float:right;
+    padding-top: 45vh;
+    padding-right: 20px;
+}
+
+.request-box .submit-button{
+    background-color: #ee3c30;
+    color: white;
+    border-radius: 18px;
+    padding: 10px 20px;
+    width: 200px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+@media screen and (max-width: 1500px) {
+
+
+    .page-content{
+        margin-left:25%;
+        width: 67%;
+
+    }
+
+    .sidebar.close + .page-content {
+        margin-left: 6%; /* Collapsed sidebar */
+    }
+
+
+
+}
+
+@media screen and (max-width: 375px){
+
+
+
+    .page-content {
+        margin-left: 12%; /* Sidebar width at this breakpoint */
+    }
+
+    .sidebar.close + .page-content {
+        margin-left: 3%; /* Collapsed sidebar */
+    }
+}
+
