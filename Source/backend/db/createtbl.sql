@@ -1,7 +1,7 @@
 
 CREATE TABLE User
 (
-    userId INT PRIMARY KEY,
+    userId INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL
 );
@@ -16,7 +16,7 @@ CREATE TABLE Members
 
 CREATE TABLE Booking
 (
-    bookingId INT PRIMARY KEY,
+    bookingId INT AUTO_INCREMENT PRIMARY KEY,
     is_recurring BOOLEAN DEFAULT false,
     location VARCHAR(100),
     awaiting_response BOOLEAN,
@@ -26,7 +26,7 @@ CREATE TABLE Booking
 
 CREATE TABLE Poll
 (
-    pollId INT PRIMARY KEY,
+    pollId INT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(500),
     title VARCHAR(50),
     status BOOLEAN DEFAULT TRUE,
@@ -36,13 +36,13 @@ CREATE TABLE Poll
 
 CREATE TABLE NotificationTemplate
 (
-    templateId INT PRIMARY KEY,
+    templateId INT AUTO_INCREMENT PRIMARY KEY,
     message VARCHAR(500)
 );
 
 CREATE TABLE Notification
 (
-    notificationId INT PRIMARY KEY,
+    notificationId INT AUTO_INCREMENT PRIMARY KEY,
     date DATE,
     status_read BOOLEAN DEFAULT false,
     userId INT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Notification
 
 CREATE TABLE Attachments
 (
-    attachmentId INT PRIMARY KEY,
+    attachmentId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     url VARCHAR(255)
 );
