@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #EE3C30;
+            color: white;
+            padding: 80px;
+            border: 1px solid black;
+            text-align: left;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+        }
+
+        .header img {
+            margin-right: 20px;
+            height: 90px;
+            margin-left: 20px;
+            display: block;
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            width: 90%;
+            max-width: 1200px;
+            margin: 150px auto 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        /* Login Box */
+        .login-box {
+            background-color: #e1e1e1;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 0px;
+            border: 1px solid black;
+        }
+
+        .login-box h3 {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            font-size: 14px;
+            border: 1px solid #000;
+        }
+
+        .login-box button {
+            width: 50%;
+            margin: 0 auto;
+            display: block;
+            padding: 12px;
+            background-color: #fff;
+            border: 1px solid #000;
+            cursor: pointer;
+            border-radius: 0px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Register Section */
+        .register-box {
+            flex: 1;
+            text-align: center; /* Center align content */
+            margin: 40px 0;
+        }
+
+        .register-box h2 {
+            color: #EE3C30;
+            font-size: 40px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .register-box button {
+            background-color: #EE3C30;
+            color: white;
+            padding: 12px 30px;
+            border: 1px solid black;
+            cursor: pointer;
+            border-radius: 0px;
+            font-size: 18px;
+            font-weight: normal;
+            text-decoration: none;
+            display: inline-block;
+          
+        }
+
+        .register-box button:hover {
+            background-color: #cc3328;
+        }
+
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                font-size: 1.4rem;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
+            
+            .header img {
+              padding: 10px;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .login-box {
+                width: 90%;
+                max-width: 400px;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+
+            .register-box {
+                width: 100%;
+            }
+
+            .register-box h2 {
+                font-size: 20px;
+            }
+
+            .register-box button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="#">
+            <img src="download.png" alt="McGill Logo">
+        </a> 
+    </div>
+
+    <!-- Main Section -->
+    <div class="container">
+        <!-- Login Box -->
+        <div class="login-box">
+            <form action="process_login.php" method="POST" onsubmit="return validateForm();">
+                <h3>Username</h3>
+                <input type="email" id="email" name="email" placeholder="Enter your email username" required>
+                <h3>Password</h3>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <button type="submit">Login</button>
+            </form>
+            <!--<h3>Username</h3>
+            <input type="email" id="email" name="email" placeholder="Enter your email username" required>
+            <h3>Password</h3>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="submit"> Login</button>-->
+        </div>
+
+
+        <!-- Register Section -->
+        <div class="register-box">
+            <h2>Don't have<br> an account?</h2>
+            <a href="register.html">
+                <button>Register Here</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Regex to check valid McGill email domains
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@(mail\.mcgill\.ca|mcgill\.ca)$/;
+
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid McGill email address (e.g., @mail.mcgill.ca or @mcgill.ca).');
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters.');
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+</body>
+</html>
