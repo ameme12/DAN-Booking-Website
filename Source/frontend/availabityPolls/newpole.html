@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta name = "viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="poll.css">
+<link rel="stylesheet" href="styleSidebar.css">
+<link rel="stylesheet" href="PollStyles.css">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Polls Page</title>
+
+</head>
+<body>
+
+<div class = "sidebar">
+
+    <header>
+
+        <div class ="dashboard-box">
+
+                        <span class="image">
+
+                        <img src="mcgill_crest.png" alt="mcgill-crest">
+
+                        </span>
+
+
+            <div class="text dashboard-text">
+
+                <span class="name" >Mcgill</span>
+                <span class="function"  >Bookings</span>
+
+            </div>
+
+        </div>
+
+        <i class="fas fa-chevron-left toggle"></i>
+
+    </header>
+
+
+    <div class="dashboard-divide">
+
+    </div>
+
+    <div class="menu-bar">
+
+        <div class="menu">
+
+            <li>
+                <a href="#">
+                    <i class="fas fa-calendar-alt icon"></i>
+                    <span class="text nav-text">Bookings</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+                    <i class="fas fa-plus-circle icon"></i>
+                    <span class="text nav-text">Create a booking</span>
+
+                </a>
+            </li>
+
+            <li>
+
+                <a href="#">
+                    <i class="fas fa-envelope icon"></i>
+                    <span class="text nav-text">Request a booking</span>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+                    <i class="fas fa-poll icon"></i>
+                    <span class="text nav-text">Availabity polls</span>
+
+                </a>
+
+            </li>
+
+
+        </div>
+
+
+    </div>
+
+    <br><br>
+    <div class="dashboard-divide"></div>
+
+    <div class= "sidebar-bottom">
+
+        <button href="#" class="button logout-button">
+            <i class="fas fa-sign-out-alt icon" ></i><span class="text logout-text">Logout</span>
+        </button>
+    </div>
+
+
+</div>
+
+<script>
+
+    const body = document.querySelector("body"),
+        sidebar = body.querySelector(".sidebar"),
+        toggle = body.querySelector(".toggle");
+
+
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+    });
+</script>
+
+<div class = "poll-page">
+
+    <header>
+        <div class="my-polls">
+            <button class = "button my-polls" >
+                <a href = "availabilityPolls.html" style="text-decoration: none; color:white;">
+                    My Polls
+                </a>
+            </button>
+        </div>
+
+        <div class="new-polls">
+            <button class = "button new-polls" style="background-color: #ee3c30;">
+                New Poll
+            </button>
+        </div>
+    </header>
+
+    <div class="poll-container">
+        <h2 class="poll-title">Poll Details</h2>
+
+        <div class="form-group">
+            <label for="poll-title">Poll Title</label>
+            <input type="text" id="poll-title" placeholder="Fanciest Name In The West" />
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="poll-description">Description</label>
+            <textarea id="poll-description" rows="4" placeholder="Help others understand your goals"></textarea>
+        </div>
+
+        <div class="form-group">
+            <center>
+                <p>This will create a 7-day selection poll from 8AM to 8 PM</p>
+            </center>
+        </div>
+
+        <div class="form-buttons">
+            <button class="form-button" id="poll-cancel">Cancel</button>
+            <button class="form-button" id="poll-create" onclick="CreatePoll()">Create Poll</button>
+        </div>
+    </div>
+
+    <script>
+        function CreatePoll()
+        {
+            let title = document.getElementById("poll-title").value;
+            let description = document.getElementById("poll-description").value;
+
+            if (!title || !description)
+            {
+                alert("Title and Description cannot be empty!");
+                return;
+            }
+
+            fetch('CreatePoll.php',
+                {
+                    method: 'POST',
+                    headers:
+                        {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                    body: `title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+                })
+                .then(response => response.text())
+                .then(data =>
+                {
+                    alert(data);
+                })
+                .catch(error =>
+                {
+                    console.error("Error:", error);
+                    alert("An error occurred while creating the poll.");
+                });
+        }
+    </script>
+
+
+
+
+
+</div>
+
+
+
+</body>
+</html>
