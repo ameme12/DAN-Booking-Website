@@ -1,6 +1,4 @@
 <?php
-
-// Start session and database connection
 session_start();
 
 // Database connection
@@ -9,8 +7,6 @@ $dbname = "test";
 $user = "users-909468";
 $pass = "4rTPckXCr7qL";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,41 +14,59 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST['name']);
+    $firstName = trim($_POST['first_name']);
+    $lastName = trim($_POST['last_name']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
     // Validate inputs
-    if (empty($name) || empty($email) || empty($password)) {
+    if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {
         die("All fields are required.");
     }
 
-    // Check if the email already exists
-    $stmt = $pdo->prepare("SELECT email FROM Members WHERE email = :email");
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
-        die("This email is already registered.");
-    }
-
-    // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    // Insert into the database
     try {
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
-        $stmt->execute();
+        // Step 1: Check if email already exists
+        $checkEmail = $pdo->prepare("SELECT COUNT(*) FROM Members WHERE email = :email");
+        $checkEmail->bindParam(':email', $email, PDO::PARAM_STR);
+        $checkEmail->execute();
 
-        echo "Registration successful! You can now log in.";
+        if ($checkEmail->fetchColumn() > 0) {
+            die("Error: This email is already registered. Please use a different email.");
+        }
+
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Start transaction
+        $pdo->beginTransaction();
+
+        // Step 1: Insert into User table
+        $stmtUser = $pdo->prepare("INSERT INTO User (firstName, lastName) VALUES (:firstName, :lastName)");
+        $stmtUser->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+        $stmtUser->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+        $stmtUser->execute();
+
+        // Get the generated userId
+        $userId = $pdo->lastInsertId();
+
+        // Step 2: Insert into Members table
+        $stmtMembers = $pdo->prepare("INSERT INTO Members (email, password, userId) VALUES (:email, :password, :userId)");
+        $stmtMembers->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmtMembers->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+        $stmtMembers->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmtMembers->execute();
+
+        // Commit the transaction
+        $pdo->commit();
+
+        // Redirect to login page
+        header("Location: login2.html");
+        exit();
     } catch (PDOException $e) {
+        // Rollback on error
+        $pdo->rollBack();
         die("Error: " . $e->getMessage());
     }
 }
-
 ?>

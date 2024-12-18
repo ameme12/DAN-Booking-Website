@@ -124,7 +124,7 @@
     .register-box {
         width: 70%; /* Slightly wider on medium screens */
         margin-top: 150px;
-        padding: 30px;
+        padding: 10px;
     }
 
     .register-box h2 {
@@ -167,7 +167,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-      <a href="#">
+      <a href="landing.html">
         <img src="download.png" alt="McGill Logo">
         </a> 
     </div>
@@ -175,9 +175,12 @@
     <!-- Register Box -->
     <div class="register-box">
         <h2>Register</h2>
-        <form action="process_login.php" method="POST" onsubmit="return validateForm();">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+        <form action="register_user.php" method="POST" onsubmit="return validateRegistration();">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required>
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
@@ -193,19 +196,25 @@
         </div>
   <script>
       function validateRegistration() {
-          const name = document.getElementById('name').value.trim();
+          const firstName = document.getElementById('first_name').value.trim();
+          const lastName = document.getElementById('last_name').value.trim();
           const email = document.getElementById('email').value.trim();
           const password = document.getElementById('password').value.trim();
 
-          // Name Validation
-          if (name.length < 2) {
-              alert("Name must be at least 2 characters.");
+          // First Name Validation
+          if (firstName.length < 2) {
+              alert("First name must be at least 2 characters.");
+              return false;
+          }
+
+          // Last Name Validation
+          if (lastName.length < 2) {
+              alert("Last name must be at least 2 characters.");
               return false;
           }
 
           // Email Validation (Regex for a valid email format)
           const emailRegex = /^[a-zA-Z0-9._%+-]+@(mail\.mcgill\.ca|mcgill\.ca)$/;
-
           if (!emailRegex.test(email)) {
               alert("Please enter a valid email address.");
               return false;
@@ -239,6 +248,7 @@
 
           return true; // If all validations pass
       }
+
 
 
   </script>

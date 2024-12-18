@@ -1,16 +1,16 @@
 <?php
-
 session_start();
 
 // Enforce secure session settings
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_secure', 0);
 
-// Database Connection (Replace with your credentials)
-$host = 'localhost';
-$dbname = 'your_database_name';
-$user = 'your_username';
-$pass = 'your_password';
+// Database Connection
+$host = "mysql.cs.mcgill.ca";
+$dbname = "test";
+$user = "users-909468";
+$pass = "4rTPckXCr7qL";
+
 
 try {
     // Connect to database with PDO
@@ -34,11 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        // Start session and store userID
+
         $_SESSION['userID'] = $user['userID'];
         $_SESSION['email'] = $email;
 
-        // Redirect to dashboard or home page
         header('Location: dashboard.php');
         exit();
     } else {
@@ -46,5 +45,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Invalid email or password.";
     }
 }
-
 ?>
