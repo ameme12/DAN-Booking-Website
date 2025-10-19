@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+//Author: Neelab Wafasharefe
+
 // Database connection
 $host = "mysql.cs.mcgill.ca";
 $dbname = "test";
@@ -13,10 +15,14 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: login2.html");
+    exit();
+}
 
-$userId = $_SESSION['userID']; // Logged-in user's ID
+$userId = $_SESSION['userID']; // logged-in user's ID
 
-// Fetch user's information for icon
+// getting user's info for icon
 try {
     $stmt = $pdo->prepare("
         SELECT firstName, lastName 
@@ -35,37 +41,39 @@ try {
     die("Error fetching user details: " . $e->getMessage());
 }
 
-
-// Fetch hosting meetings (where the logged-in user is the creator)
+// get meeting without title request and put them under hosting meetings
 try {
     $stmt = $pdo->prepare("
-        SELECT bookingId, location, is_recurring, awaiting_response
+        SELECT bookingId, location, is_recurring, awaiting_response, title, description
         FROM Booking
-        WHERE creator = :userId
+        WHERE creator = :userId AND title != 'Request'
     ");
     $stmt->bindParam(':userId', $_SESSION['userID'], PDO::PARAM_INT);
     $stmt->execute();
 
-    // Fetch all rows; ensure an empty array if no data
     $hostingMeetings = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
     die("Error fetching meetings: " . $e->getMessage());
 }
 
-// Query to fetch attending meetings
+
+
+// get meetings attending
 try {
     $stmt = $pdo->prepare("
         SELECT 
             b.bookingId,
             b.location,
             b.is_recurring,
-            b.awaiting_response
+            b.awaiting_response,
+            b.title,
+            b.description
         FROM 
             Reserve r
         JOIN 
             Booking b ON r.bookingId = b.bookingId
         WHERE 
-            r.userId = :userId
+            r.userId = :userId AND b.title != 'Request' AND b.creator != :userId
     ");
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
     $stmt->execute();
@@ -75,7 +83,25 @@ try {
     die("Error fetching meetings: " . $e->getMessage());
 }
 
-// Query to fetch past meetings
+
+
+try {
+    $stmt = $pdo->prepare("
+        SELECT bookingId, location, is_recurring, awaiting_response, title, description
+        FROM Booking
+        WHERE creator = :userId AND title = 'Request'
+    ");
+    $stmt->bindParam(':userId', $_SESSION['userID'], PDO::PARAM_INT);
+    $stmt->execute();
+
+    $requestedMeetings = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+} catch (PDOException $e) {
+    die("Error fetching requested meetings: " . $e->getMessage());
+}
+
+
+
+// get past meetings
 try {
     $stmt = $pdo->prepare("
         SELECT 
@@ -83,6 +109,8 @@ try {
             b.location,
             b.is_recurring,
             b.awaiting_response,
+            b.title,
+            b.description,
             d.start_date,
             d.end_date
         FROM 
@@ -189,10 +217,12 @@ try {
             text-decoration: none;
         }
 
+
         @media screen and (max-width: 900px) {
             .card {
                 width: calc(50% - 20px);
             }
+
         }
 
         @media screen and (max-width: 600px) {
@@ -220,15 +250,17 @@ try {
     <div class="dashboard-divide"></div>
     <div class="menu-bar">
         <div class="menu">
-            <li><a href="#"><i class="fas fa-calendar-alt icon"></i><span class="text nav-text">Bookings</span></a></li>
-            <li><a href="#"><i class="fas fa-plus-circle icon"></i><span class="text nav-text">Create a booking</span></a></li>
-            <li><a href="#"><i class="fas fa-envelope icon"></i><span class="text nav-text">Request a booking</span></a></li>
-            <li><a href="#"><i class="fas fa-poll icon"></i><span class="text nav-text">Availability polls</span></a></li>
+            <li><a href="dashboard.php"><i class="fas fa-calendar-alt icon"></i><span class="text nav-text" style="color: #ee3c30;">Bookings</span></a></li>
+            <li><a href="CreateBooking.php"><i class="fas fa-plus-circle icon"></i><span class="text nav-text">Create a booking</span></a></li>
+            <li><a href="requestBooking.php"><i class="fas fa-envelope icon"></i><span class="text nav-text">Request a booking</span></a></li>
+            <li><a href="availabilityPolls.php"><i class="fas fa-poll icon"></i><span class="text nav-text">Availability polls</span></a></li>
         </div>
     </div>
     <div class="dashboard-divide"></div>
     <div class="sidebar-bottom"></div>
-    <button onclick="window.location.href='logout.php'" class="logout-button">Logout</button>
+    <button onclick="window.location.href='logout.php'" class="logout-button">
+        <i class="fas fa-sign-out-alt icon" ></i><span class="text logout-text">Logout</span>
+    </button>
 
 </div>
 
@@ -236,8 +268,7 @@ try {
 <div class="content">
     <h1>My Upcoming Meetings</h1>
 
-    <!-- Hosting -->
-    <!-- Hosting Section -->
+    <!-- Hosting  -->
     <div class="section-title">Hosting</div>
     <div class="cards">
         <?php if (!$hostingMeetings || count($hostingMeetings) == 0 ): ?>
@@ -254,7 +285,6 @@ try {
                         Recurring: <?php echo !empty($meeting['is_recurring']) ? 'Yes' : 'No'; ?><br>
                         Awaiting Response: <?php echo !empty($meeting['awaiting_response']) ? 'Yes' : 'No'; ?>
                     </p>
-                    <a href="#">View Details ></a>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -272,17 +302,39 @@ try {
             <?php foreach ($attendingMeetings as $meeting): ?>
                 <div class="card">
                     <i class="fas fa-calendar-check"></i>
-                    <h3>Meeting ID: <?php echo htmlspecialchars($meeting['bookingId']); ?></h3>
+                    <h3> <?php echo htmlspecialchars($meeting['title']); ?></h3>
                     <p>
                         Location: <?php echo htmlspecialchars($meeting['location'] ?? 'Not specified'); ?><br>
                         Recurring: <?php echo $meeting['is_recurring'] ? 'Yes' : 'No'; ?><br>
                         Awaiting Response: <?php echo $meeting['awaiting_response'] ? 'Yes' : 'No'; ?>
                     </p>
-                    <a href="#">View Details ></a>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
+
+    <!-- Requested Meetings -->
+    <div class="section-title">Requests</div>
+    <div class="cards">
+        <?php if (empty($requestedMeetings)): ?>
+            <div style="text-align: center; color: #777; font-size: 14px;">
+                You have no requested meetings.
+            </div>
+        <?php else: ?>
+            <?php foreach ($requestedMeetings as $meeting): ?>
+                <div class="card">
+                    <i class="fas fa-paper-plane"></i>
+                    <h3> <?php echo htmlspecialchars($meeting['title']); ?></h3>
+                    <p>
+                        Location: <?php echo htmlspecialchars($meeting['location'] ?? 'Not specified'); ?><br>
+                        Recurring: <?php echo $meeting['is_recurring'] ? 'Yes' : 'No'; ?><br>
+                        Awaiting Response: <?php echo $meeting['awaiting_response'] ? 'Yes' : 'No'; ?>
+                    </p>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
 
     <!-- Past Meetings -->
     <div class="section-title">Past Meetings</div>
@@ -295,13 +347,12 @@ try {
             <?php foreach ($pastMeetings as $meeting): ?>
                 <div class="card">
                     <i class="fas fa-calendar-check"></i>
-                    <h3>Meeting ID: <?php echo htmlspecialchars($meeting['bookingId']); ?></h3>
+                    <h3> <?php echo htmlspecialchars($meeting['title']); ?></h3>
                     <p>
                         Location: <?php echo htmlspecialchars($meeting['location'] ?? 'Not specified'); ?><br>
                         Recurring: <?php echo $meeting['is_recurring'] ? 'Yes' : 'No'; ?><br>
                         End Date: <?php echo htmlspecialchars($meeting['end_date']); ?>
                     </p>
-                    <a href="#">View Details ></a>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -321,7 +372,7 @@ try {
         <span class="username">
         <?php echo htmlspecialchars($userDetails['firstName'] . " " . $userDetails['lastName']); ?>
     </span>
-        <i class="fas fa-chevron-down"></i>
+
     </div>
 
 
@@ -332,17 +383,22 @@ try {
         sidebar = document.querySelector(".sidebar"),
         toggle = document.querySelector(".toggle");
 
-    // Toggle sidebar behavior
+
     toggle.addEventListener("click", () => {
-        sidebar.classList.toggle("open"); // Add or remove 'open' class
-        sidebar.classList.toggle("close"); // Ensure consistency
+        sidebar.classList.toggle("open");
+        sidebar.classList.toggle("close");
     });
 
-    // Close sidebar on resize when screen gets larger
+
     window.addEventListener("resize", () => {
         if (window.innerWidth > 900) {
             sidebar.classList.remove("open");
             sidebar.classList.remove("close");
+            content.style.marginLeft = "15%";
+        } else {
+            sidebar.classList.remove("close");
+            sidebar.classList.add("open");
+            content.style.marginLeft = "0";
         }
     });
 

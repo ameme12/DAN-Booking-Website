@@ -193,6 +193,19 @@ header .dashboard-box .dashboard-text{
 
 }
 
+.sidebar.close .sidebar-bottom {
+    padding-top: 40px; /* Reduce space at the bottom */
+    margin-left: -10px; /* Adjust alignment */
+}
+
+.sidebar.close .logout-button {
+    margin: 0 auto; /* Center the button horizontally */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
 .logout-button:hover{
     box-shadow:5px 5px 10px rgba(0,0,0,0.15);
 }

@@ -17,12 +17,13 @@ body{
     border-bottom: 5px solid #ee3c30;
     border-top-right-radius: 100px;
     border-bottom-right-radius: 100px;
+    transition: width 0.3s ease;
 
 
 }
 
 .sidebar.close{
-    width: 5%;
+    width: 3%;
 }
 
 .sidebar .text{
@@ -95,6 +96,12 @@ header .dashboard-box .dashboard-text{
     justify-content: center;
     border-radius: 50%;
 
+
+}
+
+.sidebar header .toggle:hover{
+    box-shadow:5px 5px 10px rgba(0,0,0,0.5);
+    cursor: pointer;
 }
 
 
@@ -107,6 +114,8 @@ header .dashboard-box .dashboard-text{
     background-color: #d9d9d9;
 
 }
+
+
 
 .sidebar li{
     list-style: none;
@@ -126,6 +135,12 @@ header .dashboard-box .dashboard-text{
 
 }
 
+.sidebar li a .text:hover{
+
+    color: #ee3c30;
+}
+
+
 .sidebar li .icon{
     min-width: 40px;
     font-size: 20px;
@@ -138,38 +153,6 @@ header .dashboard-box .dashboard-text{
 
 .sidebar li .text{
     font-size: 18px;
-}
-
-
-/*
-.menu{
-    display: flex;
-    flex-direction: column;
-    padding: 15px 15px;
-    gap: 5px;
-    padding-top: 30px;
-    padding-bottom: 10px;
-
-}
-
-*/
-
-.sidebar.close ~ .content {
-    margin-left: 5%;
-}
-
-.content {
-    transition: margin-left 0.3s ease;
-}
-
-/* Hide the logout button when the sidebar is closed */
-.sidebar.close .logout-button {
-    display: none;
-}
-
-/* Smooth transition for all sidebar elements */
-.sidebar, .logout-button {
-    transition: all 0.3s ease;
 }
 
 
@@ -192,18 +175,39 @@ header .dashboard-box .dashboard-text{
     padding-bottom: 10px;
     width: 100px;
     border: none;
-    font-weight: bold;
-    font-size: 15px;
     cursor: pointer;
     margin-left: 8px;
     vertical-align: top;
     transition: box-shadow 0.15s;
 }
 
+.sidebar .logout-button .text{
+    font-weight: bold;
+    font-size: 15px;
+
+}
+
+.sidebar.close .button{
+    width: 6%;
+    height: 5%;
+
+}
+
 .logout-button:hover{
     box-shadow:5px 5px 10px rgba(0,0,0,0.15);
 }
 
+.sidebar.close .logout-button {
+    width: 40px; /* Smaller width */
+    height: 40px; /* Adjust height */
+    padding: 5px; /* Reduce padding */
+    font-size: 12px; /* Reduce font size */
+    text-align: center; /* Align text */
+}
+
+.sidebar.close .logout-button .text {
+    display: none; /* Hide text when sidebar is closed */
+}
 
 /*USER STUFF*/
 
@@ -240,72 +244,78 @@ header .dashboard-box .dashboard-text{
     font-weight: 500;
 }
 
-/* Dropdown Arrow */
-.user-icon i {
-    color: black; /* Chevron color */
-    font-size: 12px;
-}
-
-
-
 
 
 @media screen and (max-width: 1500px) {
-    .sidebar{
-        width: 25%;
+    .sidebar
+    {
         height: 100vh;
+    }
+
+    .sidebar.close{
+        width:3%;
     }
     .dashboard-divide{
         width:100%
     }
+
 }
 
-@media screen and (max-width: 900px) {
-    /* Sidebar shrinks but remains visible */
-    .sidebar {
-        width: 35%; /* Sidebar is smaller on small screens */
-        overflow: visible; /* Prevents clipping of toggle */
-        transition: all 0.3s ease;
+@media screen and (max-width: 1200px){
+
+    .sidebar
+    {
+        width: 5%;
+        height: 100vh;
+
     }
 
-    .sidebar.close {
-        width: 10%; /* Smaller sidebar when closed */
+    .sidebar .text{
+        opacity: 0;
     }
 
-    .sidebar.open ~ .content {
-        margin-left: 50%; /* Content shifts far to the right */
+    .sidebar .dashboard-box img{
+        width: 20px;
+        padding: 10px;
     }
 
-    /* Toggle button positioning */
-    .sidebar header .toggle {
-        position: absolute; /* Stick to the sidebar */
-        top: 10px; /* Align to the top */
-        right: -20px; /* Slightly outside the sidebar edge */
-        height: 30px;
-        width: 30px;
-        background-color: #ee3c30;
-        color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        z-index: 1100; /* Ensures visibility above other elements */
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .sidebar .button{
+        width: 3%;
+        height: 6%;
+
     }
 
-    /* Adjust position when the sidebar is closed */
-    .sidebar.close header .toggle {
-        right: -15px; /* Adjust position closer when closed */
+    .sidebar-bottom{
+        margin: auto;
+        padding-top: 100px;
+
+
     }
 
-    /* Content adjustment when sidebar changes */
-    .content {
-        margin-left: 25%; /* Content shifts right when sidebar is open */
-        transition: margin-left 0.3s ease;
+    .sidebar header .toggle{
+        visibility: hidden;
     }
 
-    .sidebar.close ~ .content {
-        margin-left: 10%; /* Content shifts less when sidebar is closed */
+    /* Adjust logout button for smaller screens */
+    .logout-button {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        font-size: 12px;
+        border-radius: 50%; /* Make it circular */
+        text-align: center;
+    }
+
+    .logout-button .text {
+        display: none; /* Hide text */
     }
 }
+@media screen and (max-width: 1200px) {
+    .sidebar
+    {
+        width: 7%;
+        height: 100vh;
+
+    }
+}
+

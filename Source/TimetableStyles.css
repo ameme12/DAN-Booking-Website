@@ -1,0 +1,135 @@
+
+.timetable-title
+{
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 15px auto;
+    text-align: center;
+}
+.timetable-description
+{
+    font-family: 'Montserrat', Arial, sans-serif;
+
+    text-align: center;
+    font-weight: normal;
+    font-size: 1em;
+    text-wrap: balance;
+    max-width: 400px;
+
+}
+.timetable-container
+{
+    display: grid;
+    grid-template-columns: 50px repeat(7, 1fr);
+    gap: 0px;
+    background-color: #ccc;
+    border: 2px ridge #ff867f;
+    margin: 0 auto;
+    width: fit-content;
+
+}
+
+.timetable-header,
+.timetable-time,
+.timetable-slot
+{
+    background-color: #fff;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    user-select: none;
+    height: 10px;
+    color: #3c3c3c;
+    width: 50px;
+
+
+}
+.timetable-time
+{
+    text-align: center;
+    margin-right: 13px;
+    font-size: 0.9em;
+    width:40px;
+}
+.timetable-header
+{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.2em;
+    align-content: center;
+    text-align: center;
+    height: 20px;
+}
+.timetable-header
+{
+    font-weight: bold;
+    background-color: #f7f7f7;
+    user-select: none;
+
+}
+
+.timetable-slot
+{
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.timetable-slot {
+    transition: background-color 0.3s ease;
+}
+
+.timetable-slot.low {
+    background-color: #95d5b2; /* Light green */
+}
+
+.timetable-slot.medium {
+    background-color: #32a838; /* Medium green */
+}
+
+.timetable-slot.high {
+    background-color: #2d6a4f; /* Dark green */
+    color: #fff;
+}
+
+.timetable-slot.slot-selected
+{
+    background-color: #32a838;
+    color: #fff;
+}
+
+.timetable-time
+{
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.timetable-container .disabled
+{
+    background-color: #e0e0e0;
+    pointer-events: none;
+}
+
+.close-button{
+    position:absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+.form-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: #ff6659;
+    color: #fff;
+    transition: 0.3s;
+    border: 2px solid #ff867f;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: #ff352b;
+    color: #ffffff;
+    transform: scale(103%);
+}

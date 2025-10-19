@@ -1,4 +1,5 @@
 <?php
+#author: Ameline Ramesan
 
 header('content-type: application/json');
 
@@ -11,15 +12,12 @@ try{
     $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $userId = $_GET['userId'];
 
-    $stmt = $db->prepare("SELECT User.firstName, User.lastName, User.userId 
-                            FROM User JOIN Members ON User.userId = Members.userId
-                            WHERE email LIKE '%@mcgill.ca' ");
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    echo json_encode($results);
-
+    $stmt = $db->prepare("SELECT * FROM Poll WHERE creator = ?");
+    $stmt->execute([$userId]);
+    $polls = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($polls);
 
 }catch (PDOException $e){
     echo json_encode(["error" => $e->getMessage()]);

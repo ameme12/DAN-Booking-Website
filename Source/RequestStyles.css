@@ -22,11 +22,12 @@
     padding-left:100px;
     background-color: #fff;
     border: 2px solid #ee3c30;
-    border-radius: 15px;
     max-width: 600px;
+    border-radius: 15px;
     margin: 50px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 80vh;
+    height: 110vh;
+
 }
 
 .staff-selector {
@@ -49,7 +50,7 @@
 
 .request-box-bottom{
     float:right;
-    padding-top: 37vh;
+    padding-top: 2vh;
     padding-right: 20px;
 }
 
@@ -90,8 +91,13 @@
 
 }
 
-@media screen and (max-width: 375px){
+@media screen and (max-width: 768px) {
+    .request-box {
+        height: 90vh;
+    }
+}
 
+@media screen and (max-width: 375px){
 
 
     .page-content {

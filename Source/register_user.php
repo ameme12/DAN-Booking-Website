@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+// Author: Neelab Wafasharefe
+
 // Database connection
 $host = "mysql.cs.mcgill.ca";
 $dbname = "test";

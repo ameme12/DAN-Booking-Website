@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+// Author: Neelab Wafasharefe
+
 // Enforce secure session settings
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 0);
