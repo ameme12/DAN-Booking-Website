@@ -5,7 +5,7 @@
 
 ## 🚀 Overview
 
-The **McGill Booking Website** is a responsive web application designed to streamline the process of creating, managing, and attending meetings within an academic setting. Users can register, log in, create bookings, request meetings with professors, respond to availability polls, and view upcoming or past meetings—all in one centralized dashboard.
+The **McGill Booking Website** is a responsive web application designed to streamline the process of creating, managing, and attending meetings within an academic setting. Users can register, log in, create bookings, request meetings with professors, respond to availability polls, and view upcoming or past meetings, all in one centralized dashboard.
 
 This project was built as part of a university team assignment with a strong focus on **usability, clean design, and real-world functionality**.
 
