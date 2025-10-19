@@ -82,22 +82,6 @@ features:
 
 ---
 
-## 🏗 Project Structure (Sample)
-
-```
-/Source
-  ├── landing.html
-  ├── login.html
-  ├── dashboard.html
-  ├── create_booking.html
-  ├── request_booking.html
-  ├── availability_polls.html
-  ├── css/
-  └── js/
-```
-
----
-
 ## ✨ Core Functionality Flow
 
 1. **User visits Landing Page**
