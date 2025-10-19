@@ -19,8 +19,12 @@ This project was built as part of a university team assignment with a strong foc
 * Secure credential entry
 * Redirect on successful login
 
+  
+
  ![login](https://github.com/user-attachments/assets/e2a96b58-b412-42cc-890e-77a06fd31ffb)
 ![register](https://github.com/user-attachments/assets/9135efa2-ebbd-4a57-bc2d-9d5fd9f04f69)
+
+
 
 
 ### 🏠 Landing Page
@@ -28,8 +32,12 @@ This project was built as part of a university team assignment with a strong foc
 * Introduction to the booking system
 * Call-to-action for users to log in or register
 * Integrated McGill branding
+
+  
   
 ![landing1](https://github.com/user-attachments/assets/c4a87dda-2b45-480d-8c4e-60faf43b9b4e)
+
+
 
 ### 🗂 Dashboard
 
@@ -44,6 +52,8 @@ Once logged in, users can access:
 | **Meeting Overview**   | Displays meetings the user is hosting, attending, or has attended in the past |
 
 
+
+
 ![dashboard](https://github.com/user-attachments/assets/cf851e64-e478-47df-b6f1-e6614ef2d201)
 
 features:
@@ -55,6 +65,7 @@ features:
 
 ![VotePoll](https://github.com/user-attachments/assets/3b7b65ad-af2f-492c-8d3f-770f9067dc8d)
 ![VotePoll2](https://github.com/user-attachments/assets/32f8e474-466e-4376-9158-3525f6d85330)
+
 
 
 ---
